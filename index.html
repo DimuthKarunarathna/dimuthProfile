@@ -41,19 +41,32 @@
       from, to { border-color: transparent }
       50% { border-color: #60a5fa; }
     }
+    @media (max-width: 640px) {
+      .card { padding: 1rem !important; }
+      .typewriter { font-size: 1.1rem !important; }
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
   <div id="root"></div>
   <script type="text/babel">
     const App = () => {
+      const [showMenu, setShowMenu] = React.useState(false);
+
       return (
         <div>
           {/* Navbar */}
           <nav className="bg-gray-900 fixed top-0 left-0 w-full shadow-lg z-50">
             <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
               <h1 className="text-xl font-bold gradient-text">Dimuth Karunarathna</h1>
-              <div className="flex gap-6 items-center">
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <button onClick={() => setShowMenu(!showMenu)} className="text-gray-100 focus:outline-none">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+              </div>
+              {/* Desktop menu */}
+              <div className="hidden md:flex gap-6 items-center">
                 <a href="#about" className="hover:text-blue-400">About</a>
                 <a href="#skills" className="hover:text-blue-400">Skills</a>
                 <a href="#projects" className="hover:text-blue-400">Projects</a>
@@ -68,10 +81,28 @@
                 </a>
               </div>
             </div>
+            {/* Mobile menu dropdown */}
+            {showMenu && (
+              <div className="md:hidden bg-gray-900 px-4 pb-4 flex flex-col gap-4">
+                <a href="#about" className="hover:text-blue-400" onClick={() => setShowMenu(false)}>About</a>
+                <a href="#skills" className="hover:text-blue-400" onClick={() => setShowMenu(false)}>Skills</a>
+                <a href="#projects" className="hover:text-blue-400" onClick={() => setShowMenu(false)}>Projects</a>
+                <a href="#contact" className="hover:text-blue-400" onClick={() => setShowMenu(false)}>Contact</a>
+                <a
+                  href="resume/DimuthKarunarathna.pdf"
+                  download
+                  className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-full animate-pulse border-2 border-blue-800 shadow-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  style={{ boxShadow: '0 0 10px 2px #60a5fa' }}
+                  onClick={() => setShowMenu(false)}
+                >
+                  Resume
+                </a>
+              </div>
+            )}
           </nav>
 
           {/* Hero */}
-          <section className="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-800 to-gray-900 text-center px-6">
+          <section className="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-800 to-gray-900 text-center px-4 md:px-6">
             <h2 className="text-5xl md:text-6xl font-extrabold gradient-text">Software Engineer</h2>
             <p className="mt-6 text-xl md:text-2xl text-gray-300 max-w-2xl">
               <span className="typewriter">Turning Ideas into Scalable Software | AI • .NET • Angular • ML</span>
@@ -83,8 +114,8 @@
 
           {/* About */}
           <section id="about" className="py-20 bg-gray-800">
-           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-6">
-                <img src="images/Profile-photoaidcom-cropped.png" alt="Dimuth" className="rounded-full shadow-lg"/>
+            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 md:px-6">
+              <img src="images/Profile-photoaidcom-cropped.png" alt="Dimuth" className="rounded-full shadow-lg"/>
               <div>
                 <h2 className="text-3xl font-bold mb-6">About Me</h2>
                 <p className="text-lg leading-relaxed text-gray-300">
@@ -97,9 +128,9 @@
 
           {/* Skills */}
           <section id="skills" className="py-20 bg-gray-900">
-            <div className="max-w-6xl mx-auto px-6 text-center">
+            <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
               <h2 className="text-3xl font-bold mb-12">Tech Stack</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 md:gap-8">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" className="w-16 mx-auto hover:scale-110 transition"/>
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" className="w-16 mx-auto hover:scale-110 transition"/>
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" className="w-16 mx-auto hover:scale-110 transition"/>
@@ -109,71 +140,71 @@
               </div>
             </div>
           </section>
-        {/* Projects */}
-        <section id="projects" className="py-20 bg-gray-800">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold mb-12">Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-                { title: "Credit Risk Prediction Application", img: "images/creditfina.mp4", link: "https://github.com/DimuthKarunarathna/CreditScorePredict",isLive:true,liveUrl:'https://creditscorepredict-bgtant2xgnakstjgbjys7e.streamlit.app/' },
-                { title: "Student Habits vs Academic Performance Predicto", img: "images/1755543257010.jpeg", link: "https://github.com/DimuthKarunarathna/Student-Habits-Academic-Performance" ,isLive:true,liveUrl:'https://student-habits-academic-performance.streamlit.app/'},
-                { title: "Credit Risk Prediction", img: "images/cricket.mp4", link: "https://github.com/DimuthKarunarathna/ODI-Winner-Predictor", isLive: true, liveUrl: "https://creditscorepredict-bgtant2xgnakstjgbjys7e.streamlit.app/" },
-                { title: "Airflow Stock ETL Pipeline", img: "images/airflow.jpeg", link: "https://github.com/DimuthKarunarathna/stock_market_data_pipeline" },
-                { title: "Cricket Prediction", img: "images/cricket.mp4", link: "https://github.com/DimuthKarunarathna/ODI-Winner-Predictor" },
-                { title: "Finance Chatbot", img: "images/finance chat bot.mov", link: "https://finance-bot-production.example.com", isLive: false },
-            ].map((p, i) => (
-                <div key={i} className="card p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
-                {p.img.endsWith(".mov") || p.img.endsWith(".mp4") ? (
-                    <video
-                    src={p.img}
-                    className="rounded-lg mb-4 w-full h-48 object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    />
-                ) : (
-                    <img src={p.img} alt={p.title} className="rounded-lg mb-4 w-full h-48 object-cover"/>
-                )}
-                <h3 className="text-xl font-semibold">{p.title}</h3>
-                {p.isLive && p.liveUrl && (
-                  <a
-                    href={p.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-block"
-                  >
-                    <button
-                      className="ml-2 px-4 py-2 bg-red-600 text-white font-bold rounded-full animate-pulse border-2 border-red-800 shadow-lg hover:bg-red-700 transition"
-                      style={{ boxShadow: '0 0 10px 2px #f87171' }}
-                    >
-                      🔴 LIVE ON PRODUCTION
-                    </button>
-                  </a>
-                )}
-                <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 ml-2 inline-block text-blue-400 hover:text-blue-300"
-                    style={{ display: p.isLive ? 'inline-block' : 'inline-block', marginLeft: p.isLive ? '12px' : '0' }}
-                >
-                    View on GitHub
-                </a>
-                </div>
-            ))}
-            </div>
-        </div>
-        </section>
 
+          {/* Projects */}
+          <section id="projects" className="py-20 bg-gray-800">
+            <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
+              <h2 className="text-3xl font-bold mb-12">Projects</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {[
+                  { title: "Credit Risk Prediction Application", img: "images/creditfina.mp4", link: "https://github.com/DimuthKarunarathna/CreditScorePredict", isLive: true, liveUrl: 'https://creditscorepredict-bgtant2xgnakstjgbjys7e.streamlit.app/' },
+                  { title: "Student Habits vs Academic Performance Predicto", img: "images/1755543257010.jpeg", link: "https://github.com/DimuthKarunarathna/Student-Habits-Academic-Performance", isLive: true, liveUrl: 'https://student-habits-academic-performance.streamlit.app/' },
+                  { title: "Credit Risk Prediction", img: "images/cricket.mp4", link: "https://github.com/DimuthKarunarathna/ODI-Winner-Predictor", isLive: true, liveUrl: "https://creditscorepredict-bgtant2xgnakstjgbjys7e.streamlit.app/" },
+                  { title: "Airflow Stock ETL Pipeline", img: "images/airflow.jpeg", link: "https://github.com/DimuthKarunarathna/stock_market_data_pipeline" },
+                  { title: "Cricket Prediction", img: "images/cricket.mp4", link: "https://github.com/DimuthKarunarathna/ODI-Winner-Predictor" },
+                  { title: "Finance Chatbot", img: "images/finance chat bot.mov", link: "https://finance-bot-production.example.com", isLive: false },
+                ].map((p, i) => (
+                  <div key={i} className="card p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
+                    {p.img.endsWith(".mov") || p.img.endsWith(".mp4") ? (
+                      <video
+                        src={p.img}
+                        className="rounded-lg mb-4 w-full h-48 object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img src={p.img} alt={p.title} className="rounded-lg mb-4 w-full h-48 object-cover"/>
+                    )}
+                    <h3 className="text-xl font-semibold">{p.title}</h3>
+                    {p.isLive && p.liveUrl && (
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-block"
+                      >
+                        <button
+                          className="ml-2 px-4 py-2 bg-red-600 text-white font-bold rounded-full animate-pulse border-2 border-red-800 shadow-lg hover:bg-red-700 transition"
+                          style={{ boxShadow: '0 0 10px 2px #f87171' }}
+                        >
+                          🔴 LIVE ON PRODUCTION
+                        </button>
+                      </a>
+                    )}
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 ml-2 inline-block text-blue-400 hover:text-blue-300"
+                      style={{ display: p.isLive ? 'inline-block' : 'inline-block', marginLeft: p.isLive ? '12px' : '0' }}
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Publications */}
           <section id="publications" className="py-20 bg-gray-900">
-            <div className="max-w-4xl mx-auto text-center px-6">
+            <div className="max-w-4xl mx-auto text-center px-4 md:px-6">
               <h2 className="text-3xl font-bold mb-12">Publications</h2>
               <div className="space-y-6">
                 <div className="card p-6">📘 PreCollision Detection and Context-Aware Airbag Deployment Using YOLOv8-DeepSORT and XGBoost – ICEST 2025</div>
-                 <div className="card p-6">📘 Driving Safety Innovation: ML-Powered Airbag Systems – IRCSCSE 2025</div>
+                <div className="card p-6">📘 Driving Safety Innovation: ML-Powered Airbag Systems – IRCSCSE 2025</div>
                 ICEST 2025
               </div>
             </div>
@@ -181,8 +212,7 @@
 
           {/* Contact */}
           <section id="contact" className="py-20 bg-gray-800 text-center">
-            <h2 className="text-3xl font-bold mb-8">Contact Me</h2>
-            <div className="flex justify-center gap-6">
+            <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
               <a href="mailto:dimuthkaru4@gmail.com" className="bg-gray-700 p-4 rounded-full hover:bg-blue-600 transition flex items-center justify-center">
                 <img src="images/download.png" alt="Email" className="w-16 h-16 rounded-full object-cover" />
               </a>
